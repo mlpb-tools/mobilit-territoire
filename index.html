@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stratégie Mobilité Inclusive - Mission Locale Pays Basque</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --violet-profond: #7A1A7A;
+            --rose-fuchsia: #E61D72;
+            --bleu-azur: #3BA4E0;
+            --vert-frais: #7AC143;
+            --orange-chaud: #F7941D;
+        }
+        
+        * { font-family: 'Montserrat', sans-serif; }
+        
+        .section { display: none; }
+        .section.active { display: block; }
+        
+        .nav-item { 
+            transition: all 0.3s ease; 
+            border-radius: 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-item:hover { 
+            background-color: rgba(122, 26, 122, 0.05);
+            border-bottom-color: var(--violet-profond);
+        }
+        .nav-item.active { 
+            background-color: var(--violet-profond); 
+            color: white;
+            border-bottom-color: var(--rose-fuchsia);
+        }
+        
+        .card { 
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+            border-left: 4px solid transparent;
+        }
+        .card:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 25px rgba(122, 26, 122, 0.15);
+            border-left-color: var(--violet-profond);
+        }
+        
+        .modal { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(122, 26, 122, 0.4); 
+            z-index: 1000; 
+        }
+        .modal.active { display: flex; align-items: center; justify-content: center; }
+        .modal-content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            max-width: 600px; 
+            max-height: 85vh; 
+            overflow-y: auto;
+            border-top: 4px solid var(--violet-profond);
+        }
+        
+        .color-line {
+            height: 3px;
+            background: linear-gradient(90deg, 
+                var(--violet-profond) 0%, 
+                var(--rose-fuchsia) 25%, 
+                var(--bleu-azur) 50%, 
+                var(--vert-frais) 75%, 
+                var(--orange-chaud) 100%);
+        }
+        
+        .section-header {
+            position: relative;
+            overflow: hidden;
+        }
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                var(--violet-profond) 0%, 
+                var(--rose-fuchsia) 25%, 
+                var(--bleu-azur) 50%, 
+                var(--vert-frais) 75%, 
+                var(--orange-chaud) 100%);
+        }
+        
+        .accent-violet { color: var(--violet-profond); }
+        .accent-rose { color: var(--rose-fuchsia); }
+        .accent-bleu { color: var(--bleu-azur); }
+        .accent-vert { color: var(--vert-frais); }
+        .accent-orange { color: var(--orange-chaud); }
+        
+        .bg-violet { background-color: var(--violet-profond); }
+        .bg-rose { background-color: var(--rose-fuchsia); }
+        .bg-bleu { background-color: var(--bleu-azur); }
+        .bg-vert { background-color: var(--vert-frais); }
+        .bg-orange { background-color: var(--orange-chaud); }
+        
+        .border-violet { border-color: var(--violet-profond); }
+        .border-rose { border-color: var(--rose-fuchsia); }
+        .border-bleu { border-color: var(--bleu-azur); }
+        .border-vert { border-color: var(--vert-frais); }
+        .border-orange { border-color: var(--orange-chaud); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="color-line"></div>
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center p-4">
+            <h1 class="text-xl font-bold accent-violet">Mission Locale Pays Basque</h1>
+            <div class="flex flex-wrap gap-0 mt-2 md:mt-0">
+                <button onclick="showSection('home')" class="nav-item px-4 py-3 text-sm font-medium active">Accueil</button>
+                <button onclick="showSection('etat-lieux')" class="nav-item px-4 py-3 text-sm font-medium">État des lieux</button>
+                <button onclick="showSection('projet')" class="nav-item px-4 py-3 text-sm font-medium">Projet</button>
+                <button onclick="showSection('partenaires')" class="nav-item px-4 py-3 text-sm font-medium">Partenaires</button>
+                <button onclick="showSection('aap')" class="nav-item px-4 py-3 text-sm font-medium">Financement</button>
+                <button onclick="showSection('roadmap')" class="nav-item px-4 py-3 text-sm font-medium">Déploiement</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page d'accueil -->
+    <section id="home" class="section active">
+        <!-- En-tête minimaliste -->
+        <div class="bg-white py-20 section-header">
+            <div class="max-w-4xl mx-auto text-center px-4">
+                <h1 class="text-5xl font-light accent-violet mb-6">Stratégie Mobilité Inclusive</h1>
+                <p class="text-2xl font-medium accent-rose mb-8">Mission Locale Pays Basque</p>
+                <div class="w-24 h-1 bg-violet mx-auto mb-8"></div>
+                <p class="text-lg text-gray-700 max-w-3xl mx-auto font-light leading-relaxed">
+                    Une approche innovante pour lever les freins à la mobilité des jeunes et favoriser leur insertion professionnelle
+                </p>
+            </div>
+        </div>
+
+        <!-- Navigation principale -->
+        <div class="max-w-6xl mx-auto p-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- État des lieux -->
+                <div onclick="showSection('etat-lieux')" class="card bg-white p-8 rounded-lg shadow-sm">
+                    <div class="w-12 h-12 bg-bleu rounded-full flex items-center justify-center mb-4">
+                        <span class="text-white text-xl">📊</span>
+                    </div>
+                    <h3 class="text-xl font-semibold accent-violet mb-3">État des lieux</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Diagnostic territorial et analyse des freins à la mobilité</p>
+                    <div class="accent-bleu font-medium">Voir l'analyse →</div>
+                </div>
+                
+                <!-- Projet -->
+                <div onclick="showSection('projet')" class="card bg-white p-8 rounded-lg shadow-sm">
+                    <div class="w-12 h-12 bg-vert rounded-full flex items-center justify-center mb-4">
+                        <span class="text-white text-xl">🎯</span>
+                    </div>
+                    <h3 class="text-xl font-semibold accent-violet mb-3">Parcours modulaire</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">8 modules personnalisables du diagnostic à l'autonomie</p>
+                    <div class="accent-vert font-medium">Découvrir les modules →</div>
+                </div>
+                
+                <!-- Partenaires -->
+                <div onclick="showSection('partenaires')" class="card bg-white p-8 rounded-lg shadow-sm">
+                    <div class="w-12 h-12 bg-rose rounded-full flex items-center justify-center mb-4">
+                        <span class="text-white text-xl">🤝</span>
+                    </div>
+                    <h3 class="text-xl font-semibold accent-violet mb-3">Partenaires</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">5 partenaires clés pour une approche collaborative</p>
+                    <div class="accent-rose font-medium">Voir l'écosystème →</div>
+                </div>
+                
+                <!-- Financement -->
+                <div onclick="showSection('aap')" class="card bg-white p-8 rounded-lg shadow-sm">
+                    <div class="w-12 h-12 bg-orange rounded-full flex items-center justify-center mb-4">
+                        <span class="text-white text-xl">💰</span>
+                    </div>
+                    <h3 class="text-xl font-semibold accent-violet mb-3">Financement</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">AAP Roole prioritaire pour un financement optimal</p>
+                    <div class="accent-orange font-medium">Voir la stratégie →</div>
+                </div>
+                
+                <!-- Déploiement -->
+                <div onclick="showSection('roadmap')" class="card bg-white p-8 rounded-lg shadow-sm">
+                    <div class="w-12 h-12 bg-violet rounded-full flex items-center justify-center mb-4">
+                        <span class="text-white text-xl">🚀</span>
+                    </div>
+                    <h3 class="text-xl font-semibold accent-violet mb-3">Déploiement</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">Roadmap détaillée sur 15 mois</p>
+                    <div class="accent-violet font-medium">Consulter le planning →</div>
+                </div>
+                
+                <!-- Synthèse CODIR -->
+                <div onclick="showModal('synthese-codir')" class="card bg-violet text-white p-8 rounded-lg shadow-sm">
+                    <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-white text-xl">📋</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Synthèse CODIR</h3>
+                    <p class="text-white text-opacity-90 mb-6 leading-relaxed">Points de décision et recommandations stratégiques</p>
+                    <div class="text-white font-medium">Voir les recommandations →</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chiffres clés -->
+        <div class="bg-gray-50 py-16">
+            <div class="max-w-4xl mx-auto px-4">
+                <h2 class="text-3xl font-light text-center accent-violet mb-12">Chiffres clés</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="text-4xl font-light accent-bleu mb-2">8</div>
+                        <div class="text-gray-600 font-medium">Modules</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="text-4xl font-light accent-vert mb-2">5</div>
+                        <div class="text-gray-600 font-medium">Partenaires</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="text-4xl font-light accent-rose mb-2">200</div>
+                        <div class="text-gray-600 font-medium">Jeunes/an</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="text-4xl font-light accent-orange mb-2">15</div>
+                        <div class="text-gray-600 font-medium">Mois</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- État des lieux -->
+    <section id="etat-lieux" class="section">
+        <div class="bg-white py-16 section-header">
+            <div class="max-w-4xl mx-auto text-center px-4">
+                <h1 class="text-4xl font-light accent-violet mb-4">État des lieux</h1>
+                <p class="text-xl accent-rose font-medium">La mobilité des jeunes au Pays Basque</p>
+            </div>
+        </div>
+        
+        <div class="max-w-4xl mx-auto p-6">
+            <div class="bg-gray-100 rounded-lg p-6 mb-6">
+                <h3 class="text-lg font-bold mb-3">📄 Synthèse étude INJEP 2025</h3>
+                <p class="text-gray-700">
+                    L'étude révèle des disparités importantes dans l'accès à la mobilité des jeunes au Pays Basque. 
+                    Les freins psychologiques représentent 40% des obstacles, tandis que la fracture territoriale 
+                    accentue les inégalités entre zones urbaines et rurales.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4">
+                <div onclick="showModal('freins-mobilite')" class="card bg-white p-4 rounded-lg shadow border">
+                    <div class="text-2xl mb-2">🚧</div>
+                    <h3 class="font-semibold mb-1">Freins à la mobilité</h3>
+                    <p class="text-gray-600 text-sm">Obstacles psychologiques et matériels</p>
+                </div>
+                
+                <div onclick="showModal('inegalites-territoriales')" class="card bg-white p-4 rounded-lg shadow border">
+                    <div class="text-2xl mb-2">🗺️</div>
+                    <h3 class="font-semibold mb-1">Inégalités territoriales</h3>
+                    <p class="text-gray-600 text-sm">Fracture urbain/rural</p>
+                </div>
+                
+                <div onclick="showModal('enjeux-emploi')" class="card bg-white p-4 rounded-lg shadow border">
+                    <div class="text-2xl mb-2">💼</div>
+                    <h3 class="font-semibold mb-1">Enjeux emploi/formation</h3>
+                    <p class="text-gray-600 text-sm">Impact sur l'insertion professionnelle</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projet et parcours -->
+    <section id="projet" class="section">
+        <div class="bg-white py-16 section-header">
+            <div class="max-w-4xl mx-auto text-center px-4">
+                <h1 class="text-4xl font-light accent-violet mb-4">Parcours modulaire</h1>
+                <p class="text-xl accent-rose font-medium">8 modules pour une mobilité inclusive</p>
+            </div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto p-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div onclick="showModal('module-1')" class="card bg-white p-6 rounded-lg shadow-sm border-l-4 border-bleu">
+                    <div class="w-10 h-10 bg-bleu rounded-full flex items-center justify-center mb-3">
+                        <span class="text-white">🔍</span>
+                    </div>
+                    <h3 class="font-semibold accent-violet mb-2">1. Diagnostic mobilité</h3>
+                    <p class="text-sm text-gray-600">Évaluation personnalisée</p>
+                </div>
+                
+                <div onclick="showModal('module-2')" class="card bg-white p-6 rounded-lg shadow-sm border-l-4 border-vert">
+                    <div class="w-10 h-10 bg-vert rounded-full flex items-center justify-center mb-3">
+                        <span class="text-white">🚶</span>
+                    </div>
+                    <h3 class="font-semibold accent-violet mb-2">2. Je me déplace</h3>
+                    <p class="text-sm text-gray-600">Ateliers MLPB</p>
+                </div>
+                
+                <div onclick="showModal('module-3')" class="card bg-white p-6 rounded-lg shadow-sm border-l-4 border-violet">
+                    <div class="w-10 h-10 bg-violet rounded-full flex items-center justify-center mb-3">
+                        <span class="text-white">🔧</span>
+                    </div>
+                    <h3 class="font-semibold accent-violet mb-2">3. Ateliers mécaniques</h3>
+                    <p class="text-sm text-gray-600">Partenariat Roole</p>
+                </div>
+                
+                <div onclick="showModal('module-4')" class="card bg-white p-6 rounded-lg shadow-sm border-l-4 border-orange">
+                    <div class="w-10 h-10 bg-orange rounded-full flex items-center justify-center mb-3">
+                        <span class="text-white">ℹ️</span>
+                    </div>
+                    <h3 class="font-semibold accent-violet mb-2">4. Point relais CIEL</h3>
+                    <p class="text-sm text-gray-600">Information et orientation</p>
+                </div>
+                
+                <div onclick="showModal('module-5')" class="card bg-white p-6 rounded-lg shadow-sm border-l-4 border-rose">
+                    <div class="w-10 h-10 bg-rose rounded-full flex items-center justify-center mb-3">
+                        <span class="text-white">📚</span>
+                    </div>
+                    <h3 class="font-semibold accent-violet mb-2">5. Déclic Code</h3>
+                    <p class="text-sm text-gray-600">Formation AFPA</p>
+                </div>
+                
+                <div onclick="showModal('module-6')" class="card bg-white p-6 rounded-lg shadow-sm border-l-4 border-bleu">
+                    <div class="w-10 h-10 bg-bleu rounded-full flex items-center justify-center mb-3">
+                        <span class="text-white">⚖️</span>
+                    </div>
+                    <h3 class="font-semibold accent-violet mb-2">6. Droit du véhicule</h3>
+                    <p class="text-sm text-gray-600">Atelier InfoDroits</p>
+                </div>
+                
+                <div onclick="showModal('module-7')" class="card bg-white p-6 rounded-lg shadow-sm border-l-4 border-vert">
+                    <div class="w-10 h-10 bg-vert rounded-full flex items-center justify-center mb-3">
+                        <span class="text-white">🤝</span>
+                    </div>
+                    <h3 class="font-semibold accent-violet mb-2">7. Covoiturage solidaire</h3>
+                    <p class="text-sm text-gray-600">Conduite supervisée</p>
+                </div>
+                
+                <div onclick="showModal('module-8')" class="card bg-white p-6 rounded-lg shadow-sm border-l-4 border-orange">
+                    <div class="w-10 h-10 bg-orange rounded-full flex items-center justify-center mb-3">
+                        <span class="text-white">📊</span>
+                    </div>
+                    <h3 class="font-semibold accent-violet mb-2">8. Bilan et projection</h3>
+                    <p class="text-sm text-gray-600">Évaluation finale</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partenaires -->
+    <section id="partenaires" class="section">
+        <div class="bg-white py-16 section-header">
+            <div class="max-w-4xl mx-auto text-center px-4">
+                <h1 class="text-4xl font-light accent-violet mb-4">Partenaires</h1>
+                <p class="text-xl accent-rose font-medium">Un réseau mobilisé pour la mobilité inclusive</p>
+            </div>
+        </div>
+        
+        <div class="max-w-4xl mx-auto p-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div onclick="showModal('region')" class="card bg-white p-4 rounded-lg shadow text-center">
+                    <div class="w-12 h-12 bg-red-500 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">R</div>
+                    <h3 class="font-semibold text-sm">Région NA</h3>
+                    <p class="text-xs text-gray-600">Aide au permis</p>
+                </div>
+                
+                <div onclick="showModal('syndicat')" class="card bg-white p-4 rounded-lg shadow text-center">
+                    <div class="w-12 h-12 bg-purple-500 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">S</div>
+                    <h3 class="font-semibold text-sm">Syndicat Mobilités</h3>
+                    <p class="text-xs text-gray-600">Pilotage territorial</p>
+                </div>
+                
+                <div onclick="showModal('benevoles')" class="card bg-white p-4 rounded-lg shadow text-center">
+                    <div class="w-12 h-12 bg-yellow-500 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">B</div>
+                    <h3 class="font-semibold text-sm">Bénévoles ML</h3>
+                    <p class="text-xs text-gray-600">Parrainage mobilité</p>
+                </div>
+                
+                <div onclick="showModal('infodroits')" class="card bg-white p-4 rounded-lg shadow text-center">
+                    <div class="w-12 h-12 bg-indigo-500 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">I</div>
+                    <h3 class="font-semibold text-sm">InfoDroits</h3>
+                    <p class="text-xs text-gray-600">Droit du véhicule</p>
+                </div>
+                
+                <div onclick="showModal('afpa')" class="card bg-white p-4 rounded-lg shadow text-center">
+                    <div class="w-12 h-12 bg-pink-500 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">A</div>
+                    <h3 class="font-semibold text-sm">AFPA</h3>
+                    <p class="text-xs text-gray-600">Déclic Code</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financement -->
+    <section id="aap" class="section">
+        <div class="bg-white py-16 section-header">
+            <div class="max-w-4xl mx-auto text-center px-4">
+                <h1 class="text-4xl font-light accent-violet mb-4">Stratégie de financement</h1>
+                <p class="text-xl accent-rose font-medium">AAP Roole prioritaire</p>
+            </div>
+        </div>
+        
+        <div class="max-w-4xl mx-auto p-6">
+            <div class="bg-blue-600 text-white rounded-lg p-6 mb-6 text-center">
+                <h3 class="text-xl font-bold mb-2">🎯 RECOMMANDATION CODIR</h3>
+                <p class="text-lg">Candidater en priorité sur l'AAP Roole</p>
+                <p class="text-sm opacity-90 mt-2">Financement direct sans cofinancement + démarrage immédiat possible</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow p-6 border-l-4 border-blue-500">
+                    <h3 class="text-lg font-bold mb-3 text-blue-600">Roole - Prioritaire</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span>Ateliers mécaniques intégrés</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span>Covoiturage solidaire</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span>Action immédiate possible</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
+                    <h3 class="text-lg font-bold mb-3 text-green-600">Transdev - Complémentaire</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-start">
+                            <span class="text-blue-500 mr-2">•</span>
+                            <span>Cofinancement complémentaire</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Déploiement -->
+    <section id="roadmap" class="section">
+        <div class="bg-white py-16 section-header">
+            <div class="max-w-4xl mx-auto text-center px-4">
+                <h1 class="text-4xl font-light accent-violet mb-4">Déploiement</h1>
+                <p class="text-xl accent-rose font-medium">Roadmap sur 15 mois</p>
+            </div>
+        </div>
+        
+        <div class="max-w-4xl mx-auto p-6">
+            <div class="space-y-4">
+                <div onclick="showModal('etape-1')" class="card bg-white p-4 rounded-lg shadow border-l-4 border-blue-500">
+                    <div class="flex items-center">
+                        <div class="w-6 h-6 bg-blue-500 rounded-full text-white flex items-center justify-center text-xs font-bold mr-3">1</div>
+                        <div>
+                            <h3 class="font-semibold text-sm">Mise en place du référent mobilité interne</h3>
+                            <p class="text-xs text-gray-600">Formation et désignation du référent mobilité</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div onclick="showModal('etape-2')" class="card bg-white p-4 rounded-lg shadow border-l-4 border-green-500">
+                    <div class="flex items-center">
+                        <div class="w-6 h-6 bg-green-500 rounded-full text-white flex items-center justify-center text-xs font-bold mr-3">2</div>
+                        <div>
+                            <h3 class="font-semibold text-sm">Lancement du diagnostic jeunes</h3>
+                            <p class="text-xs text-gray-600">Évaluation personnalisée des besoins en mobilité</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div onclick="showModal('etape-3')" class="card bg-white p-4 rounded-lg shadow border-l-4 border-purple-500">
+                    <div class="flex items-center">
+                        <div class="w-6 h-6 bg-purple-500 rounded-full text-white flex items-center justify-center text-xs font-bold mr-3">3</div>
+                        <div>
+                            <h3 class="font-semibold text-sm">Déploiement ateliers et point relais</h3>
+                            <p class="text-xs text-gray-600">Ateliers collectifs et point d'information mobilité</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div onclick="showModal('etape-4')" class="card bg-white p-4 rounded-lg shadow border-l-4 border-orange-500">
+                    <div class="flex items-center">
+                        <div class="w-6 h-6 bg-orange-500 rounded-full text-white flex items-center justify-center text-xs font-bold mr-3">4</div>
+                        <div>
+                            <h3 class="font-semibold text-sm">Lancement Déclic Code et droit véhicule</h3>
+                            <p class="text-xs text-gray-600">Formation code de la route et sensibilisation juridique</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div onclick="showModal('etape-5')" class="card bg-white p-4 rounded-lg shadow border-l-4 border-red-500">
+                    <div class="flex items-center">
+                        <div class="w-6 h-6 bg-red-500 rounded-full text-white flex items-center justify-center text-xs font-bold mr-3">5</div>
+                        <div>
+                            <h3 class="font-semibold text-sm">Flotte partagée et ateliers mécaniques</h3>
+                            <p class="text-xs text-gray-600">Déploiement véhicules et formation mécanique</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div onclick="showModal('etape-6')" class="card bg-white p-4 rounded-lg shadow border-l-4 border-yellow-500">
+                    <div class="flex items-center">
+                        <div class="w-6 h-6 bg-yellow-500 rounded-full text-white flex items-center justify-center text-xs font-bold mr-3">6</div>
+                        <div>
+                            <h3 class="font-semibold text-sm">Covoiturage solidaire</h3>
+                            <p class="text-xs text-gray-600">Mobilisation du réseau de bénévoles</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div onclick="showModal('etape-7')" class="card bg-white p-4 rounded-lg shadow border-l-4 border-indigo-500">
+                    <div class="flex items-center">
+                        <div class="w-6 h-6 bg-indigo-500 rounded-full text-white flex items-center justify-center text-xs font-bold mr-3">7</div>
+                        <div>
+                            <h3 class="font-semibold text-sm">Évaluation et capitalisation</h3>
+                            <p class="text-xs text-gray-600">Bilan des actions et montée en charge</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modales -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="modal-title" class="text-2xl font-bold"></h2>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+            </div>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Masquer toutes les sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Afficher la section demandée
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Mettre à jour la navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Scroll vers le haut
+            window.scrollTo(0, 0);
+        }
+
+        function showModal(modalId) {
+            const modal = document.getElementById('modal');
+            const title = document.getElementById('modal-title');
+            const body = document.getElementById('modal-body');
+            
+            const modalContent = {
+                'synthese-codir': {
+                    title: 'Synthèse pour le CODIR - Points de décision',
+                    content: `
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-r from-blue-600 to-green-600 text-white p-6 rounded-lg">
+                                <h3 class="text-xl font-bold mb-4">🎯 Recommandation stratégique</h3>
+                                <p class="text-lg">Valider le déploiement de la stratégie mobilité inclusive avec priorité AAP Roole</p>
+                            </div>
+                            
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="bg-green-50 border border-green-200 p-6 rounded-lg">
+                                    <h4 class="font-bold text-green-800 mb-3">✅ AVANTAGES STRATÉGIQUES</h4>
+                                    <ul class="text-sm space-y-2">
+                                        <li>• <strong>Impact direct :</strong> X% des jeunes concernés par les freins mobilité</li>
+                                        <li>• <strong>ROI social :</strong> Réduction de X% des ruptures de contrat</li>
+                                        <li>• <strong>Coût maîtrisé :</strong> Optimisation par partenariats et bénévolat</li>
+                                        <li>• <strong>Financement :</strong> AAP Roole sans cofinancement obligatoire</li>
+                                        <li>• <strong>Différenciation :</strong> Première ML avec parcours mobilité intégré</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="bg-orange-50 border border-orange-200 p-6 rounded-lg">
+                                    <h4 class="font-bold text-orange-800 mb-3">⚠️ POINTS D'ATTENTION</h4>
+                                    <ul class="text-sm space-y-2">
+                                        <li>• <strong>Ressources :</strong> Désignation référent mobilité (X ETP)</li>
+                                        <li>• <strong>Formation :</strong> Montée en compétences équipe (Xh)</li>
+                                        <li>• <strong>Partenariats :</strong> Formalisation conventions (X mois)</li>
+                                        <li>• <strong>Suivi :</strong> Indicateurs d'impact à définir</li>
+                                        <li>• <strong>Communication :</strong> Valorisation auprès financeurs</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-blue-50 border border-blue-200 p-6 rounded-lg">
+                                <h4 class="font-bold text-blue-800 mb-3">📋 DÉCISIONS ATTENDUES</h4>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <h5 class="font-semibold mb-2">Validation de principe :</h5>
+                                        <ul class="text-sm space-y-1">
+                                            <li>• Lancement du projet mobilité inclusive</li>
+                                            <li>• Candidature AAP Roole prioritaire</li>
+                                            <li>• Allocation ressources internes</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold mb-2">Prochaines étapes :</h5>
+                                        <ul class="text-sm space-y-1">
+                                            <li>• Désignation référent mobilité</li>
+                                            <li>• Lancement négociations partenaires</li>
+                                            <li>• Préparation dossier AAP (J+30)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 border border-gray-200 p-6 rounded-lg text-center">
+                                <h4 class="font-bold text-gray-800 mb-2">🎯 OBJECTIF 2025</h4>
+                                <p class="text-lg"><strong>X jeunes</strong> accompagnés dans leur parcours mobilité</p>
+                                <p class="text-sm text-gray-600 mt-2">Avec un taux de réussite insertion emploi/formation de +X%</p>
+                            </div>
+                        </div>
+                    `
+                },
+
+                'freins-mobilite': {
+                    title: 'Freins à la mobilité',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-red-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">Freins psychologiques (40%)</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Peur de conduire</li>
+                                    <li>• Manque de confiance en soi</li>
+                                    <li>• Appréhension des transports publics</li>
+                                </ul>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">Freins financiers (35%)</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Coût du permis de conduire</li>
+                                    <li>• Achat et entretien véhicule</li>
+                                    <li>• Abonnements transport</li>
+                                </ul>
+                            </div>
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">Freins techniques (25%)</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Méconnaissance des solutions</li>
+                                    <li>• Complexité administrative</li>
+                                    <li>• Manque d'information</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                'inegalites-territoriales': {
+                    title: 'Inégalités territoriales',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">Fracture urbain/rural</h4>
+                                <p class="text-sm mb-2">Les jeunes ruraux sont 3 fois plus dépendants de la voiture individuelle</p>
+                                <ul class="text-sm space-y-1">
+                                    <li>• 65% des jeunes ruraux sans permis sont isolés</li>
+                                    <li>• 28% abandonnent une formation faute de mobilité</li>
+                                    <li>• 42% refusent un emploi pour raisons de transport</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">Solutions territoriales</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Transport à la demande renforcé</li>
+                                    <li>• Covoiturage solidaire organisé</li>
+                                    <li>• Points relais mobilité décentralisés</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                'enjeux-emploi': {
+                    title: 'Enjeux emploi et formation',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">Impact sur l'insertion</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• 58% des jeunes citent la mobilité comme frein à l'emploi</li>
+                                    <li>• 23% des ruptures de contrat liées au transport</li>
+                                    <li>• 31% d'abandons de formation pour problèmes de mobilité</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">Opportunités sectorielles</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Tourisme : mobilité saisonnière</li>
+                                    <li>• Agriculture : transport vers exploitations</li>
+                                    <li>• Services : horaires décalés</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                'module-1': {
+                    title: 'Module 1 - Diagnostic mobilité',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎯 Objectif</h4>
+                                <p class="text-sm">Évaluer les besoins, freins et ressources mobilité de chaque jeune</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">⏱️ Durée</h4>
+                                <p class="text-sm">X entretiens individuels de Xh</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📋 Livrables</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Fiche diagnostic personnalisée</li>
+                                    <li>• Plan de mobilité individualisé</li>
+                                    <li>• Orientation vers modules adaptés</li>
+                                </ul>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🤝 Partenaires</h4>
+                                <p class="text-sm">Référent mobilité Mission Locale + Syndicat des mobilités</p>
+                            </div>
+                        </div>
+                    `
+                },
+                'module-2': {
+                    title: 'Module 2 - Ateliers "Je me déplace"',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎯 Objectif</h4>
+                                <p class="text-sm">Découvrir et maîtriser les solutions de mobilité du territoire</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">⏱️ Durée</h4>
+                                <p class="text-sm">X ateliers collectifs de Xh</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📋 Livrables</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Carnet de mobilité personnalisé</li>
+                                    <li>• Applications et outils numériques</li>
+                                    <li>• Réseau de contacts mobilité</li>
+                                </ul>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🤝 Partenaires</h4>
+                                <p class="text-sm">Mission Locale + Transdev + Syndicat des mobilités</p>
+                            </div>
+                        </div>
+                    `
+                },
+                'module-3': {
+                    title: 'Module 3 - Ateliers mécaniques',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎯 Objectif</h4>
+                                <p class="text-sm">Acquérir les bases de l'entretien automobile et réduire les coûts</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">⏱️ Durée</h4>
+                                <p class="text-sm">X ateliers pratiques de Xh</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📋 Livrables</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Certificat de compétences mécaniques</li>
+                                    <li>• Carnet d'entretien véhicule</li>
+                                    <li>• Réseau garages partenaires</li>
+                                </ul>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🤝 Partenaires</h4>
+                                <p class="text-sm">Roole + Garages solidaires + Bénévoles techniques</p>
+                            </div>
+                        </div>
+                    `
+                },
+                'module-4': {
+                    title: 'Module 4 - Point relais CIEL',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎯 Objectif</h4>
+                                <p class="text-sm">Centraliser l'information et l'orientation mobilité</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">⏱️ Durée</h4>
+                                <p class="text-sm">Permanence 2 demi-journées/semaine</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📋 Livrables</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Fiches info mobilité actualisées</li>
+                                    <li>• Orientation vers dispositifs d'aide</li>
+                                    <li>• Mise en relation avec partenaires</li>
+                                </ul>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🤝 Partenaires</h4>
+                                <p class="text-sm">Mission Locale + Tous partenaires mobilité</p>
+                            </div>
+                        </div>
+                    `
+                },
+                'module-5': {
+                    title: 'Module 5 - Déclic Code AFPA',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎯 Objectif</h4>
+                                <p class="text-sm">Préparer et réussir l'examen du code de la route</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">⏱️ Durée</h4>
+                                <p class="text-sm">Formation de 35h sur 2 semaines</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📋 Livrables</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Attestation de formation</li>
+                                    <li>• Présentation à l'examen</li>
+                                    <li>• Suivi post-formation</li>
+                                </ul>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🤝 Partenaires</h4>
+                                <p class="text-sm">AFPA + Région Nouvelle-Aquitaine</p>
+                            </div>
+                        </div>
+                    `
+                },
+                'module-6': {
+                    title: 'Module 6 - Droit du véhicule',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎯 Objectif</h4>
+                                <p class="text-sm">Connaître ses droits et obligations en matière automobile</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">⏱️ Durée</h4>
+                                <p class="text-sm">2 ateliers de 2h</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📋 Livrables</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Guide juridique automobile</li>
+                                    <li>• Contacts juridiques utiles</li>
+                                    <li>• Modèles de courriers</li>
+                                </ul>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🤝 Partenaires</h4>
+                                <p class="text-sm">InfoDroits + Mission Locale</p>
+                            </div>
+                        </div>
+                    `
+                },
+                'module-7': {
+                    title: 'Module 7 - Covoiturage solidaire',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎯 Objectif</h4>
+                                <p class="text-sm">Développer la conduite accompagnée intergénérationnelle</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">⏱️ Durée</h4>
+                                <p class="text-sm">Accompagnement sur 6 mois</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📋 Livrables</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Binôme jeune/bénévole constitué</li>
+                                    <li>• Carnet de conduite supervisée</li>
+                                    <li>• Réseau covoiturage actif</li>
+                                </ul>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🤝 Partenaires</h4>
+                                <p class="text-sm">Réseau bénévoles ML + Roole + Transdev</p>
+                            </div>
+                        </div>
+                    `
+                },
+                'module-8': {
+                    title: 'Module 8 - Bilan et projection',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎯 Objectif</h4>
+                                <p class="text-sm">Évaluer les acquis et projeter l'autonomie mobilité</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">⏱️ Durée</h4>
+                                <p class="text-sm">2 entretiens de bilan + suivi 6 mois</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📋 Livrables</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Bilan de compétences mobilité</li>
+                                    <li>• Plan d'autonomie personnalisé</li>
+                                    <li>• Certification parcours mobilité</li>
+                                </ul>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🤝 Partenaires</h4>
+                                <p class="text-sm">Mission Locale + Ensemble des partenaires</p>
+                            </div>
+                        </div>
+                    `
+                },
+                'roole': {
+                    title: 'Roole - Mobilité solidaire',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🚗 Flotte partagée</h4>
+                                <p class="text-sm">Véhicules en autopartage pour les jeunes en insertion</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🔧 Ateliers mécaniques</h4>
+                                <p class="text-sm">Formation pratique à l'entretien automobile</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🤝 Covoiturage solidaire</h4>
+                                <p class="text-sm">Mise en relation et accompagnement covoiturage</p>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">💰 Financement</h4>
+                                <p class="text-sm">AAP mobilité solidaire - financement direct équipements</p>
+                            </div>
+                        </div>
+                    `
+                },
+                'transdev': {
+                    title: 'Transdev - Transport public',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🚌 Réseau Txik Txak</h4>
+                                <p class="text-sm">Transport public et transport à la demande</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">👥 Médiation sociale</h4>
+                                <p class="text-sm">Accompagnement renforcé dans les transports</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎓 Ateliers mobilitaires</h4>
+                                <p class="text-sm">Formation à l'usage des transports publics</p>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">💰 Cofinancement</h4>
+                                <p class="text-sm">AAP parcours 100h - cofinancement obligatoire</p>
+                            </div>
+                        </div>
+                    `
+                },
+                'region': {
+                    title: 'Région Nouvelle-Aquitaine',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎓 Aide au permis</h4>
+                                <p class="text-sm">Financement permis de conduire pour les jeunes en formation</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📚 Déclic Code</h4>
+                                <p class="text-sm">Dispositif régional de formation au code de la route</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🚆 TER Nouvelle-Aquitaine</h4>
+                                <p class="text-sm">Tarification solidaire et abonnements jeunes</p>
+                            </div>
+                        </div>
+                    `
+                },
+                'syndicat': {
+                    title: 'Syndicat des mobilités',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🏛️ Pilotage territorial</h4>
+                                <p class="text-sm">Coordination des politiques de mobilité du Pays Basque</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📊 Observatoire mobilité</h4>
+                                <p class="text-sm">Données et études sur les besoins de mobilité</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🤝 Partenariats</h4>
+                                <p class="text-sm">Facilitation des collaborations entre acteurs</p>
+                            </div>
+                        </div>
+                    `
+                },
+                'garages': {
+                    title: 'Garages solidaires',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🔧 Appui technique</h4>
+                                <p class="text-sm">Expertise mécanique et diagnostic véhicules</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">💰 Tarifs solidaires</h4>
+                                <p class="text-sm">Réparations à prix réduit pour les jeunes</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎓 Formation pratique</h4>
+                                <p class="text-sm">Accueil stagiaires pour ateliers mécaniques</p>
+                            </div>
+                        </div>
+                    `
+                },
+                'benevoles': {
+                    title: 'Réseau bénévoles Mission Locale',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🤝 Parrainage mobilité</h4>
+                                <p class="text-sm">Accompagnement personnalisé des jeunes</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🚗 Conduite supervisée</h4>
+                                <p class="text-sm">Accompagnement intergénérationnel à la conduite</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📞 Réseau d'entraide</h4>
+                                <p class="text-sm">Covoiturage solidaire et dépannage</p>
+                            </div>
+                        </div>
+                    `
+                },
+                'infodroits': {
+                    title: 'InfoDroits',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">⚖️ Droit du véhicule</h4>
+                                <p class="text-sm">Ateliers sur les droits et obligations automobiles</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📋 Conseil juridique</h4>
+                                <p class="text-sm">Accompagnement dans les démarches administratives</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🛡️ Protection consommateur</h4>
+                                <p class="text-sm">Information sur les droits lors d'achats véhicules</p>
+                            </div>
+                        </div>
+                    `
+                },
+                'afpa': {
+                    title: 'AFPA',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📚 Déclic Code</h4>
+                                <p class="text-sm">Formation intensive au code de la route</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎓 Certification</h4>
+                                <p class="text-sm">Attestation de formation reconnue</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">👥 Pédagogie adaptée</h4>
+                                <p class="text-sm">Méthodes d'apprentissage pour publics en difficulté</p>
+                            </div>
+                        </div>
+                    `
+                },
+                'etape-1': {
+                    title: 'Étape 1 - Référent mobilité interne',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎯 Objectifs</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Désigner et former le référent mobilité</li>
+                                    <li>• Structurer l'offre de services interne</li>
+                                    <li>• Établir les partenariats clés</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📅 Calendrier</h4>
+                                <p class="text-sm">Mois 1-2 : Formation et mise en place</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📋 Actions</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Formation référent (40h)</li>
+                                    <li>• Signature conventions partenaires</li>
+                                    <li>• Création outils diagnostic</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                'etape-2': {
+                    title: 'Étape 2 - Diagnostic jeunes',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎯 Objectifs</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Évaluer 200 jeunes la première année</li>
+                                    <li>• Identifier les besoins prioritaires</li>
+                                    <li>• Orienter vers les modules adaptés</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📅 Calendrier</h4>
+                                <p class="text-sm">Mois 2-12 : Diagnostic continu</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📊 Indicateurs</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Nombre de diagnostics réalisés</li>
+                                    <li>• Taux d'orientation vers modules</li>
+                                    <li>• Satisfaction des jeunes</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                'etape-3': {
+                    title: 'Étape 3 - Ateliers et point relais',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎯 Objectifs</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Lancer les ateliers "Je me déplace"</li>
+                                    <li>• Ouvrir le point relais CIEL</li>
+                                    <li>• Former 50 jeunes aux solutions mobilité</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📅 Calendrier</h4>
+                                <p class="text-sm">Mois 3-6 : Déploiement progressif</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎯 Cibles</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• 12 ateliers collectifs/an</li>
+                                    <li>• 2 permanences CIEL/semaine</li>
+                                    <li>• 100 jeunes informés</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                'etape-4': {
+                    title: 'Étape 4 - Déclic Code et droit véhicule',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎯 Objectifs</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Démarrer les formations Déclic Code</li>
+                                    <li>• Lancer les ateliers droit du véhicule</li>
+                                    <li>• Former 30 jeunes au code</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📅 Calendrier</h4>
+                                <p class="text-sm">Mois 4-8 : Montée en charge</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎯 Résultats attendus</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• 80% de réussite au code</li>
+                                    <li>• 60 jeunes sensibilisés au droit</li>
+                                    <li>• Partenariats AFPA/InfoDroits actifs</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                'etape-5': {
+                    title: 'Étape 5 - Flotte partagée et mécanique',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎯 Objectifs</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Déployer 5 véhicules en autopartage</li>
+                                    <li>• Ouvrir l'atelier mécanique</li>
+                                    <li>• Former 40 jeunes à la mécanique</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📅 Calendrier</h4>
+                                <p class="text-sm">Mois 6-10 : Déploiement équipements</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">💰 Financement Roole</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Véhicules et équipements</li>
+                                    <li>• Formation des animateurs</li>
+                                    <li>• Outils et matériel atelier</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                'etape-6': {
+                    title: 'Étape 6 - Covoiturage et conduite supervisée',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎯 Objectifs</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Mobiliser 20 bénévoles accompagnateurs</li>
+                                    <li>• Créer 15 binômes jeune/bénévole</li>
+                                    <li>• Structurer le covoiturage solidaire</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📅 Calendrier</h4>
+                                <p class="text-sm">Mois 8-12 : Déploiement réseau</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🤝 Partenariats</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Formation bénévoles (20h)</li>
+                                    <li>• Plateforme covoiturage</li>
+                                    <li>• Assurance conduite supervisée</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                'etape-7': {
+                    title: 'Étape 7 - Évaluation et capitalisation',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🎯 Objectifs</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Évaluer l'impact sur 200 jeunes</li>
+                                    <li>• Capitaliser les bonnes pratiques</li>
+                                    <li>• Préparer la montée en charge</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📅 Calendrier</h4>
+                                <p class="text-sm">Mois 12-15 : Bilan et perspectives</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📊 Indicateurs clés</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Taux d'insertion emploi/formation</li>
+                                    <li>• Autonomie mobilité acquise</li>
+                                    <li>• Satisfaction partenaires</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+
+            const content = modalContent[modalId];
+            if (content) {
+                title.textContent = content.title;
+                body.innerHTML = content.content;
+                modal.classList.add('active');
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Fermer la modale en cliquant à l'extérieur
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Fermer avec Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97f872f0c727f1a8',t:'MTc1Nzk0MjcxNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
