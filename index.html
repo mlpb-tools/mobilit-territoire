@@ -114,6 +114,47 @@
         .border-bleu { border-color: var(--bleu-azur); }
         .border-vert { border-color: var(--vert-frais); }
         .border-orange { border-color: var(--orange-chaud); }
+        
+        .in-progress {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .in-progress::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse-neon 2s infinite;
+            z-index: 10;
+        }
+        
+        .in-progress::after {
+            content: 'En cours';
+            position: absolute;
+            top: 6px;
+            right: 20px;
+            font-size: 10px;
+            color: #10b981;
+            font-weight: 500;
+            opacity: 0.8;
+            z-index: 10;
+        }
+        
+        @keyframes pulse-neon {
+            0%, 100% {
+                opacity: 1;
+                box-shadow: 0 0 5px #10b981, 0 0 10px #10b981, 0 0 15px #10b981;
+            }
+            50% {
+                opacity: 0.3;
+                box-shadow: 0 0 2px #10b981;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -250,11 +291,18 @@
         <div class="max-w-4xl mx-auto p-6">
             <div class="bg-gray-100 rounded-lg p-6 mb-6">
                 <h3 class="text-lg font-bold mb-3">📄 Synthèse étude INJEP 2025</h3>
-                <p class="text-gray-700">
+                <p class="text-gray-700 mb-4">
                     L'étude révèle des disparités importantes dans l'accès à la mobilité des jeunes au Pays Basque. 
                     Les freins psychologiques représentent 40% des obstacles, tandis que la fracture territoriale 
                     accentue les inégalités entre zones urbaines et rurales.
                 </p>
+                <a href="https://www.canva.com/design/DAGzDnY-Mww/T0AKWWlOgarrc_CogUDhgA/edit" 
+                   target="_blank" 
+                   class="inline-flex items-center bg-violet text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors">
+                    <span class="mr-2">📊</span>
+                    Télécharger l'étude complète
+                    <span class="ml-2">↗</span>
+                </a>
             </div>
 
             <div class="grid md:grid-cols-3 gap-4">
@@ -306,15 +354,15 @@
                     <p class="text-sm text-gray-600">Ateliers MLPB</p>
                 </div>
                 
-                <div onclick="showModal('module-3')" class="card bg-white p-6 rounded-lg shadow-sm border-l-4 border-violet">
+                <div onclick="showModal('module-3')" class="card bg-white p-6 rounded-lg shadow-sm border-l-4 border-violet in-progress">
                     <div class="w-10 h-10 bg-violet rounded-full flex items-center justify-center mb-3">
                         <span class="text-white">🔧</span>
                     </div>
                     <h3 class="font-semibold accent-violet mb-2">3. Ateliers mécaniques</h3>
-                    <p class="text-sm text-gray-600">Partenariat Roole</p>
+                    <p class="text-sm text-gray-600">Projet JPT</p>
                 </div>
                 
-                <div onclick="showModal('module-4')" class="card bg-white p-6 rounded-lg shadow-sm border-l-4 border-orange">
+                <div onclick="showModal('module-4')" class="card bg-white p-6 rounded-lg shadow-sm border-l-4 border-orange in-progress">
                     <div class="w-10 h-10 bg-orange rounded-full flex items-center justify-center mb-3">
                         <span class="text-white">ℹ️</span>
                     </div>
@@ -338,7 +386,7 @@
                     <p class="text-sm text-gray-600">Atelier InfoDroits</p>
                 </div>
                 
-                <div onclick="showModal('module-7')" class="card bg-white p-6 rounded-lg shadow-sm border-l-4 border-vert">
+                <div onclick="showModal('module-7')" class="card bg-white p-6 rounded-lg shadow-sm border-l-4 border-vert in-progress">
                     <div class="w-10 h-10 bg-vert rounded-full flex items-center justify-center mb-3">
                         <span class="text-white">🤝</span>
                     </div>
@@ -397,6 +445,12 @@
                     <h3 class="font-semibold text-sm">AFPA</h3>
                     <p class="text-xs text-gray-600">Déclic Code</p>
                 </div>
+                
+                <div onclick="showModal('ciel')" class="card bg-white p-4 rounded-lg shadow text-center">
+                    <div class="w-12 h-12 bg-teal-500 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">C</div>
+                    <h3 class="font-semibold text-sm">CIEL</h3>
+                    <p class="text-xs text-gray-600">Location solidaire</p>
+                </div>
             </div>
         </div>
     </section>
@@ -415,9 +469,18 @@
                 <h3 class="text-xl font-bold mb-2">🎯 RECOMMANDATION CODIR</h3>
                 <p class="text-lg">Candidater en priorité sur l'AAP Roole</p>
                 <p class="text-sm opacity-90 mt-2">Financement direct sans cofinancement + démarrage immédiat possible</p>
+                <div class="mt-4">
+                    <a href="https://www.canva.com/design/DAGzD6osLdY/5k8VTTnzgKvxFktK7lAy8A/edit" 
+                       target="_blank" 
+                       class="inline-flex items-center bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors font-medium">
+                        <span class="mr-2">📄</span>
+                        Télécharger la réponse AAP Roole
+                        <span class="ml-2">↗</span>
+                    </a>
+                </div>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-6">
+            <div class="grid md:grid-cols-3 gap-6">
                 <div class="bg-white rounded-lg shadow p-6 border-l-4 border-blue-500">
                     <h3 class="text-lg font-bold mb-3 text-blue-600">Roole - Prioritaire</h3>
                     <div class="space-y-2 text-sm">
@@ -442,6 +505,24 @@
                         <div class="flex items-start">
                             <span class="text-blue-500 mr-2">•</span>
                             <span>Cofinancement complémentaire</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow p-6 border-l-4 border-orange-500">
+                    <h3 class="text-lg font-bold mb-3 text-orange-600">FAJ Collectif - Support</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span>Frais réparations ateliers</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span>Pièces détachées</span>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span>Équipement atelier</span>
                         </div>
                     </div>
                 </div>
@@ -504,8 +585,8 @@
                     <div class="flex items-center">
                         <div class="w-6 h-6 bg-red-500 rounded-full text-white flex items-center justify-center text-xs font-bold mr-3">5</div>
                         <div>
-                            <h3 class="font-semibold text-sm">Flotte partagée et ateliers mécaniques</h3>
-                            <p class="text-xs text-gray-600">Déploiement véhicules et formation mécanique</p>
+                            <h3 class="font-semibold text-sm">Point relais location solidaire CIEL et ateliers mécaniques</h3>
+                            <p class="text-xs text-gray-600">Déploiement point relais et formation mécanique</p>
                         </div>
                     </div>
                 </div>
@@ -722,12 +803,23 @@
                             </div>
                             <div class="bg-green-50 p-4 rounded-lg">
                                 <h4 class="font-semibold mb-2">⏱️ Durée</h4>
-                                <p class="text-sm">X entretiens individuels de Xh</p>
+                                <p class="text-sm">15-20 minutes en autonomie + entretien de restitution</p>
+                            </div>
+                            <div class="bg-gray-100 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🔧 Outil de diagnostic</h4>
+                                <p class="text-sm mb-3">Questionnaire interactif d'évaluation des besoins mobilité</p>
+                                <a href="https://mlpb-tools.github.io/diagmob360/" 
+                                   target="_blank" 
+                                   class="inline-flex items-center bg-violet text-white px-3 py-2 rounded text-sm hover:bg-opacity-90 transition-colors">
+                                    <span class="mr-2">🔍</span>
+                                    Accéder au diagnostic mobilité 360°
+                                    <span class="ml-2">↗</span>
+                                </a>
                             </div>
                             <div class="bg-purple-50 p-4 rounded-lg">
                                 <h4 class="font-semibold mb-2">📋 Livrables</h4>
                                 <ul class="text-sm space-y-1">
-                                    <li>• Fiche diagnostic personnalisée</li>
+                                    <li>• Bilan diagnostic personnalisé</li>
                                     <li>• Plan de mobilité individualisé</li>
                                     <li>• Orientation vers modules adaptés</li>
                                 </ul>
@@ -751,6 +843,17 @@
                                 <h4 class="font-semibold mb-2">⏱️ Durée</h4>
                                 <p class="text-sm">X ateliers collectifs de Xh</p>
                             </div>
+                            <div class="bg-gray-100 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📄 Support pédagogique</h4>
+                                <p class="text-sm mb-3">Support interactif pour animer les ateliers mobilité</p>
+                                <a href="https://www.canva.com/design/DAGccINtwfE/TdB77qI2G-12-izGQpoHcQ/edit" 
+                                   target="_blank" 
+                                   class="inline-flex items-center bg-violet text-white px-3 py-2 rounded text-sm hover:bg-opacity-90 transition-colors">
+                                    <span class="mr-2">📊</span>
+                                    Accéder au support atelier
+                                    <span class="ml-2">↗</span>
+                                </a>
+                            </div>
                             <div class="bg-purple-50 p-4 rounded-lg">
                                 <h4 class="font-semibold mb-2">📋 Livrables</h4>
                                 <ul class="text-sm space-y-1">
@@ -761,7 +864,7 @@
                             </div>
                             <div class="bg-orange-50 p-4 rounded-lg">
                                 <h4 class="font-semibold mb-2">🤝 Partenaires</h4>
-                                <p class="text-sm">Mission Locale + Transdev + Syndicat des mobilités</p>
+                                <p class="text-sm">Mission Locale + Syndicat des mobilités</p>
                             </div>
                         </div>
                     `
@@ -784,11 +887,22 @@
                                     <li>• Certificat de compétences mécaniques</li>
                                     <li>• Carnet d'entretien véhicule</li>
                                     <li>• Réseau garages partenaires</li>
+                                    <li>• Orientation vers soutien financier FAJ</li>
+                                </ul>
+                            </div>
+                            <div class="bg-yellow-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">💰 Suite logique - Soutien financier</h4>
+                                <p class="text-sm mb-2"><strong>Fonds d'Aides aux Jeunes départemental</strong></p>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Aide individuelle : réparations urgentes, pièces détachées</li>
+                                    <li>• Aide collective : équipement atelier, outils partagés</li>
+                                    <li>• Accompagnement dans la constitution du dossier</li>
+                                    <li>• Suivi post-attribution de l'aide</li>
                                 </ul>
                             </div>
                             <div class="bg-orange-50 p-4 rounded-lg">
                                 <h4 class="font-semibold mb-2">🤝 Partenaires</h4>
-                                <p class="text-sm">Roole + Garages solidaires + Bénévoles techniques</p>
+                                <p class="text-sm">Garages solidaires + Bénévoles techniques + Conseil Départemental (FAJ)</p>
                             </div>
                         </div>
                     `
@@ -840,6 +954,17 @@
                                     <li>• Suivi post-formation</li>
                                 </ul>
                             </div>
+                            <div class="bg-gray-100 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">📄 Support pédagogique</h4>
+                                <p class="text-sm mb-3">Support interactif pour la formation Déclic Code</p>
+                                <a href="https://www.canva.com/design/DAGzDjMuU00/pjLdUy_WuduzveeTGlR-dA/edit" 
+                                   target="_blank" 
+                                   class="inline-flex items-center bg-violet text-white px-3 py-2 rounded text-sm hover:bg-opacity-90 transition-colors">
+                                    <span class="mr-2">📚</span>
+                                    Accéder au support Déclic Code
+                                    <span class="ml-2">↗</span>
+                                </a>
+                            </div>
                             <div class="bg-orange-50 p-4 rounded-lg">
                                 <h4 class="font-semibold mb-2">🤝 Partenaires</h4>
                                 <p class="text-sm">AFPA + Région Nouvelle-Aquitaine</p>
@@ -879,8 +1004,11 @@
                     content: `
                         <div class="space-y-4">
                             <div class="bg-blue-50 p-4 rounded-lg">
-                                <h4 class="font-semibold mb-2">🎯 Objectif</h4>
-                                <p class="text-sm">Développer la conduite accompagnée intergénérationnelle</p>
+                                <h4 class="font-semibold mb-2">🎯 Objectifs</h4>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Développer la conduite supervisée solidaire intergénérationnelle via le parrainage vers l'emploi</li>
+                                    <li>• Développer un réseau d'entraide de covoiturage solidaire via un applicatif simple, outil collaboratif</li>
+                                </ul>
                             </div>
                             <div class="bg-green-50 p-4 rounded-lg">
                                 <h4 class="font-semibold mb-2">⏱️ Durée</h4>
@@ -896,7 +1024,7 @@
                             </div>
                             <div class="bg-orange-50 p-4 rounded-lg">
                                 <h4 class="font-semibold mb-2">🤝 Partenaires</h4>
-                                <p class="text-sm">Réseau bénévoles ML + Roole + Transdev</p>
+                                <p class="text-sm">Réseau bénévoles ML</p>
                             </div>
                         </div>
                     `
@@ -924,52 +1052,6 @@
                             <div class="bg-orange-50 p-4 rounded-lg">
                                 <h4 class="font-semibold mb-2">🤝 Partenaires</h4>
                                 <p class="text-sm">Mission Locale + Ensemble des partenaires</p>
-                            </div>
-                        </div>
-                    `
-                },
-                'roole': {
-                    title: 'Roole - Mobilité solidaire',
-                    content: `
-                        <div class="space-y-4">
-                            <div class="bg-blue-50 p-4 rounded-lg">
-                                <h4 class="font-semibold mb-2">🚗 Flotte partagée</h4>
-                                <p class="text-sm">Véhicules en autopartage pour les jeunes en insertion</p>
-                            </div>
-                            <div class="bg-green-50 p-4 rounded-lg">
-                                <h4 class="font-semibold mb-2">🔧 Ateliers mécaniques</h4>
-                                <p class="text-sm">Formation pratique à l'entretien automobile</p>
-                            </div>
-                            <div class="bg-purple-50 p-4 rounded-lg">
-                                <h4 class="font-semibold mb-2">🤝 Covoiturage solidaire</h4>
-                                <p class="text-sm">Mise en relation et accompagnement covoiturage</p>
-                            </div>
-                            <div class="bg-orange-50 p-4 rounded-lg">
-                                <h4 class="font-semibold mb-2">💰 Financement</h4>
-                                <p class="text-sm">AAP mobilité solidaire - financement direct équipements</p>
-                            </div>
-                        </div>
-                    `
-                },
-                'transdev': {
-                    title: 'Transdev - Transport public',
-                    content: `
-                        <div class="space-y-4">
-                            <div class="bg-blue-50 p-4 rounded-lg">
-                                <h4 class="font-semibold mb-2">🚌 Réseau Txik Txak</h4>
-                                <p class="text-sm">Transport public et transport à la demande</p>
-                            </div>
-                            <div class="bg-green-50 p-4 rounded-lg">
-                                <h4 class="font-semibold mb-2">👥 Médiation sociale</h4>
-                                <p class="text-sm">Accompagnement renforcé dans les transports</p>
-                            </div>
-                            <div class="bg-purple-50 p-4 rounded-lg">
-                                <h4 class="font-semibold mb-2">🎓 Ateliers mobilitaires</h4>
-                                <p class="text-sm">Formation à l'usage des transports publics</p>
-                            </div>
-                            <div class="bg-orange-50 p-4 rounded-lg">
-                                <h4 class="font-semibold mb-2">💰 Cofinancement</h4>
-                                <p class="text-sm">AAP parcours 100h - cofinancement obligatoire</p>
                             </div>
                         </div>
                     `
@@ -1006,27 +1088,19 @@
                                 <p class="text-sm">Données et études sur les besoins de mobilité</p>
                             </div>
                             <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">💰 Tarification solidaire jeunes</h4>
+                                <p class="text-sm mb-3">Offre tarifaire spécifique pour le public jeunes en insertion</p>
+                                <a href="https://www.canva.com/design/DAGXGeZG1Sw/hjp3MrluNxgok2d994KnNA/edit?utm_content=DAGXGeZG1Sw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" 
+                                   target="_blank" 
+                                   class="inline-flex items-center bg-violet text-white px-3 py-2 rounded text-sm hover:bg-opacity-90 transition-colors">
+                                    <span class="mr-2">📋</span>
+                                    Tutoriel tarification solidaire
+                                    <span class="ml-2">↗</span>
+                                </a>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg">
                                 <h4 class="font-semibold mb-2">🤝 Partenariats</h4>
                                 <p class="text-sm">Facilitation des collaborations entre acteurs</p>
-                            </div>
-                        </div>
-                    `
-                },
-                'garages': {
-                    title: 'Garages solidaires',
-                    content: `
-                        <div class="space-y-4">
-                            <div class="bg-blue-50 p-4 rounded-lg">
-                                <h4 class="font-semibold mb-2">🔧 Appui technique</h4>
-                                <p class="text-sm">Expertise mécanique et diagnostic véhicules</p>
-                            </div>
-                            <div class="bg-green-50 p-4 rounded-lg">
-                                <h4 class="font-semibold mb-2">💰 Tarifs solidaires</h4>
-                                <p class="text-sm">Réparations à prix réduit pour les jeunes</p>
-                            </div>
-                            <div class="bg-purple-50 p-4 rounded-lg">
-                                <h4 class="font-semibold mb-2">🎓 Formation pratique</h4>
-                                <p class="text-sm">Accueil stagiaires pour ateliers mécaniques</p>
                             </div>
                         </div>
                     `
@@ -1084,6 +1158,25 @@
                             <div class="bg-purple-50 p-4 rounded-lg">
                                 <h4 class="font-semibold mb-2">👥 Pédagogie adaptée</h4>
                                 <p class="text-sm">Méthodes d'apprentissage pour publics en difficulté</p>
+                            </div>
+                        </div>
+                    `
+                },
+                'ciel': {
+                    title: 'CIEL - Mission Locale Pays Basque',
+                    content: `
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🚗 Point relais véhicule</h4>
+                                <p class="text-sm">Point relais d'un véhicule en location solidaire géré par le référent mobilité</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">ℹ️ Information mobilité</h4>
+                                <p class="text-sm">Centralisation de l'information et orientation vers les solutions de mobilité</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">🤝 Accompagnement personnalisé</h4>
+                                <p class="text-sm">Suivi individualisé des jeunes dans leur parcours mobilité</p>
                             </div>
                         </div>
                     `
@@ -1197,13 +1290,13 @@
                     `
                 },
                 'etape-5': {
-                    title: 'Étape 5 - Flotte partagée et mécanique',
+                    title: 'Étape 5 - Point relais location solidaire CIEL et ateliers mécaniques',
                     content: `
                         <div class="space-y-4">
                             <div class="bg-blue-50 p-4 rounded-lg">
                                 <h4 class="font-semibold mb-2">🎯 Objectifs</h4>
                                 <ul class="text-sm space-y-1">
-                                    <li>• Déployer 5 véhicules en autopartage</li>
+                                    <li>• Déployer le point relais location solidaire CIEL</li>
                                     <li>• Ouvrir l'atelier mécanique</li>
                                     <li>• Former 40 jeunes à la mécanique</li>
                                 </ul>
@@ -1215,7 +1308,7 @@
                             <div class="bg-purple-50 p-4 rounded-lg">
                                 <h4 class="font-semibold mb-2">💰 Financement Roole</h4>
                                 <ul class="text-sm space-y-1">
-                                    <li>• Véhicules et équipements</li>
+                                    <li>• Point relais et équipements</li>
                                     <li>• Formation des animateurs</li>
                                     <li>• Outils et matériel atelier</li>
                                 </ul>
@@ -1305,5 +1398,5 @@
             }
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97f872f0c727f1a8',t:'MTc1Nzk0MjcxNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97ffca313363ce93',t:'MTc1ODAxOTY4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
